@@ -10,7 +10,8 @@ export const auth = (req, res, next) => {
     const token = req.cookies.jwt
 
     if (!token) {
-        return res.status(statusMessage.UNAUTHORIZED).json({ message: "Token does not exists" })
+        res.redirect('/login')
+        return 
     }
 
     const verification = jwt.verify(token, `${jwt_key}`)

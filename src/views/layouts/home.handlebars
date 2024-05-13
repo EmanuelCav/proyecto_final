@@ -11,14 +11,19 @@
 </head>
 
 <body>
-
     <div class="container-header">
-        <h1 class="title-header">Products</h1>
+        <h1 class="title-header">eCommerce</h1>
         <div class="contain-navigation">
+
             {{#if user}}
             <a href="/logout" class="nav-link text-header">Logout</a>
+            <a href="/profile" class="nav-link text-header">Profile</a>
+            <a href="/cart" class="nav-link text-header">Cart</a>
+            {{#if_eq user.role 'admin'}}
+            <a href="/panel" class="nav-link text-header">Panel</a>
+            {{/if_eq}}
             {{else}}
-            <a href="/" class="nav-link text-header">Login</a>
+            <a href="/login" class="nav-link text-header">Login</a>
             <a href="/register" class="nav-link text-header">Register</a>
             {{/if}}
         </div>

@@ -177,6 +177,7 @@ export const login = async (req, res) => {
         const token = generateToken(user._id, user.role, user.email)
 
         res.cookie('jwt',token, { httpOnly: true, secure: true, maxAge: 3600000 })
+        res.cookie('isLoggedIn', true, { httpOnly: true, secure: true, maxAge: 3600000 })
 
         return res.status(statusMessage.OK).redirect('/products')
 
@@ -246,7 +247,8 @@ export const register = async (req, res) => {
 
         const token = generateToken(user._id, user.role, user.email)
 
-        res.cookie('jwt',token, { httpOnly: true, secure: true, maxAge: 3600000 })
+        res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: 3600000 })
+        res.cookie('isLoggedIn', true, { httpOnly: true, secure: true, maxAge: 3600000 })
 
         await infoEmail(email)
 

@@ -21,8 +21,13 @@ const app = express()
 app.use(addLogger)
 
 import './helper/passport.js'
+import { equal } from './helper/hbs.js'
 
-app.engine('handlebars', engine());
+app.engine('handlebars', engine({
+    helpers: {
+        if_eq: equal.if_eq
+    }
+}));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(path.dirname(fileURLToPath(import.meta.url)), "./views"));
 
