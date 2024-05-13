@@ -1,0 +1,43 @@
+@API = http://localhost:4000/api
+
+### Users
+GET {{API}}/users
+
+### Register
+POST {{API}}/register
+Content-Type: application/json
+
+{
+    "email": "adminCoder@coder.com",
+    "password": "adminCod3r123",
+    "confirm": "adminCod3r123",
+    "firstname": "Coder",
+    "lastname": "House",
+    "role": "admin"
+}
+
+### Login
+POST {{API}}/login
+Content-Type: application/json
+
+{
+    "email": "admincoder@coder.com",
+    "password": "adminCod3r123"
+}
+
+### Forgot Password
+POST {{API}}/users
+Content-Type: application/json
+
+{
+    "email": "admincoder@coder.com"
+}
+
+### Recover Password
+PUT {{API}}/users/admincoder@coder.com
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+    "password": ""
+}

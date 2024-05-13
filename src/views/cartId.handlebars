@@ -1,0 +1,18 @@
+<div class="container-products" id="container-cart">
+
+    {{#each cart.products}}
+    <div class="product">
+        <div class="contain-title">
+            <p class="product-title">{{this.product.title}}</p>
+            <p class="product-description">{{this.product.description}}</p>
+        </div>
+        <div class="contain-price">
+            <p class="product-price">${{this.product.price}}</p>
+            <p class="product-stock ">unidades: {{this.product.stock}}</p>
+        </div>
+    </div>
+    {{/each}}
+
+</div>
+
+<script src="/js/products.js"></script>

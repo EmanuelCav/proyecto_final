@@ -1,0 +1,136 @@
+paths:
+  /api/carts:
+    post:
+      summary: Create cart
+      tags:
+        - Create Cart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Cart'
+      responses:
+        "200":
+          description: Cart created successfully
+        "400":
+          description: Error to create a cart
+        "500":
+          description: Internal error
+
+  /api/cart/{cid}:
+    get:
+      summary: Get all products
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: paths
+          required: true
+          description: Cart id
+          schema:
+            $type: String
+          responses:
+            "200":
+              description: Cart has been got successfully
+            "400":
+              description: Cart has not been got
+            "500":
+              description: Internal error
+
+    delete:
+      summary: Remove produts
+      tags:
+        - Remove All produts
+      parameters:
+        - name: cid
+          in: paths
+          required: true
+          description: Cart id
+          schema:
+            $type: String
+          responses:
+            "200":
+              description: Products has been delete successfully
+            "400":
+              description: Products has not been got
+            "500":
+              description: Internal error
+
+  /api/carts/{cid}/products/{pid}:
+    patch:
+      summary: Add product
+      tags:
+        - Add Product
+      parameters:
+        - name: cid
+        - name: pid
+          in: paths
+          required: true
+          description: Cart and product id
+          schema:
+            $type: String
+          responses:
+            "200":
+              description: Product has been added successfully
+            "400":
+              description: Product has not been got
+            "500":
+              description: Internal error
+    delete:
+      summary: Remove cart
+      tags:
+        - Remove Cart
+      parameters:
+        - name: cid
+        - name: pid
+          in: paths
+          required: true
+          description: Cart and product id
+          schema:
+            $type: String
+          responses:
+            "200":
+              description: Cart has been delete successfully
+            "400":
+              description: Cart has not been got
+            "500":
+              description: Internal error
+    put:
+      summary: Quantity product
+      tags:
+        - Quantity Product
+      parameters:
+        - name: cid
+        - name: pid
+          in: paths
+          required: true
+          description: Cart and product id
+          schema:
+            $type: String
+          responses:
+            "200":
+              description: Quantity has been updated successfully
+            "400":
+              description: Cart or product has not been got
+            "500":
+              description: Internal error
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: id
+        products:
+          type: ObjectId[]
+          description: products
+        user:
+          type: ObjectId
+          description: user
+      example:
+        _id: ObjectId("507f1f77bcf86cd799439011")
+        products: []
+        user: ObjectId("507f191e810c19729de860ea")

@@ -1,0 +1,142 @@
+paths:
+  /api/products:
+    get:
+      summary: Get all products
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Products has been got successfully
+          schema:
+            type: array
+            items:
+            $ref: "#components/schemas/Product"
+        "500":
+          description: Internal error
+    post:
+      summary: Create product
+      tags:
+        - Create Product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/Product"
+      responses:
+        "200":
+          description: Product created successfully
+        "400":
+          description: Error to create a product
+        "500":
+          description: Internal error
+
+  /api/products/{pid}:
+    get:
+      summary: Get all products
+      tags:
+        - Product
+      parameters:
+        - name: pid
+          in: paths
+          required: true
+          description: Product id
+          schema:
+            $type: String
+          responses:
+            "200":
+              description: Products has been got successfully
+            "400":
+              description: Product has not been got
+            "500":
+              description: Internal error
+    put:
+      summary: Update product
+      tags:
+        - Update product
+      parameters:
+        - name: pid
+          in: paths
+          required: true
+          description: Product id
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/Product"
+      responses:
+        "200":
+          description: Product has been updated successfully
+        "400":
+          description: Product has not been got
+        "500":
+          description: Internal error
+
+    delete:
+      summary: Remove product
+      tags:
+        - Remove Product
+      parameters:
+        - name: pid
+          in: paths
+          required: true
+          description: Product id
+          schema:
+            $type: String
+          responses:
+            "200":
+              description: Product has been delete successfully
+            "400":
+              description: Product has not been got
+            "500":
+              description: Internal error
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: id
+        title:
+          type: String
+          description: title
+        description:
+          type: String
+          description: description
+        code:
+          type: String
+          description: code
+        price:
+          type: Number
+          description: id
+        status:
+          type: Boolean
+          description: status
+        stock:
+          type: Number
+          description: stock
+        category:
+          type: String
+          description: category
+        thumbnails:
+          type: String[]
+          description: thumbnails
+        owner:
+          type: ObjectId
+          description: user
+      example:
+        _id: ObjectId("507f1f77bcf86cd799439011")
+        title: ProductOne
+        description: ProductOne descruption
+        code: jg9kkf
+        price: 7000
+        status: true
+        stock: 11
+        category: pants
+        thumbnails: ["image1", "image2"]
+        owner: ObjectId("507f191e810c19729de860ea")

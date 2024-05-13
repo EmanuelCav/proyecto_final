@@ -1,0 +1,28 @@
+{{#if message}}
+<div class="alert alert-success" role="alert">
+    {{message}}
+</div>
+{{/if}}
+
+<div class="container-products" id="container-products">
+
+    <div class="card-deck">
+        {{#each products}}
+
+        <div class="card">
+            <img class="card-img-top" src={{this.thumbnails.[0]}} alt="product">
+            <div class="card-body">
+                <h5 class="card-title">{{this.title}}</h5>
+                <p class="card-text">{{this.description}}</p>
+                <p class="card-text text-success">${{this.price}}</p>
+                <p class="card-text">Unidades: {{this.stock}}</p>
+            </div>
+        </div>
+
+        {{/each}}
+
+    </div>
+
+</div>
+
+<script src="/js/products.js"></script>

@@ -1,0 +1,145 @@
+
+fatal: Fatal
+fatal: Fatal
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: Operation `products.find()` buffering timed out after 10000ms
+error: undefined
+error: undefined
+error: Operation `products.find()` buffering timed out after 10000ms
+error: undefined
+error: undefined
+error: Operation `products.find()` buffering timed out after 10000ms
+error: undefined
+error: undefined
+error: Operation `products.find()` buffering timed out after 10000ms
+error: undefined
+error: undefined
+error: undefined
+error: Operation `products.find()` buffering timed out after 10000ms
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: Operation `products.find()` buffering timed out after 10000ms
+error: There are empty fields
+error: There are empty fields
+error: cookie_name is not defined
+error: User does not exists or password is incorrect
+error: User does not exists or password is incorrect
+error: User is not defined
+error: User is not defined
+error: User is not defined
+error: User is not defined
+error: User is not defined
+error: RegisterDTO is not defined
+error: role is not defined
+error: User validation failed: phone: Path `phone` is required.
+error: generateToken is not defined
+error: Cannot read properties of undefined (reading 'render')
+error: bcryptjs is not defined
+error: Invalid status code: {
+  layout: 'home',
+  message: 'Welcome',
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDIyOTQ4MDJlMWY0YzZkNjFhNWJmMSIsInJvbGUiOiJ1c2VyIiwiZW1haWwiOiJjYXZhbGxpbmVtYUBnbWFpbC5jb20iLCJpYXQiOjE3MTU2MTU4MzIsImV4cCI6MTcxNjIyMDYzMn0.ILCo9F0eqgJwRM4cyWMfJT76mmoMhamI6YOnYEcOY1I'
+}
+error: Invalid status code: {
+  layout: 'home',
+  message: 'Welcome',
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDIzY2FjMmYzYjY5Yjg5OGJiZmJkZCIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5jb2RlckBjb2Rlci5jb20iLCJpYXQiOjE3MTU2MTY5NDAsImV4cCI6MTcxNjIyMTc0MH0.LLLr3oTqonuIPjF1T0lrZuHXnoVxRaOqfwoPNnkqSaA'
+}
