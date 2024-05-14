@@ -28,7 +28,7 @@ export const auth = (req, res, next) => {
 
 export const admin = (req, res, next) => {
 
-    const token = req.headers.authorization.split(' ')[1]
+    const token = req.cookies.jwt
 
     if (!token) {
         return res.status(statusMessage.UNAUTHORIZED).json({ message: "Token does not exists" })
@@ -52,7 +52,7 @@ export const admin = (req, res, next) => {
 
 export const emailAuth = async (req, res, next) => {
 
-    const token = req.headers.authorization.split(' ')[1]
+    const token = req.cookies.jwt
 
     if (!token) {
         await forgotPasswordEmail(req.body.email)
@@ -72,7 +72,7 @@ export const emailAuth = async (req, res, next) => {
 
 export const premium = (req, res, next) => {
 
-    const token = req.headers.authorization.split(' ')[1]
+    const token = req.cookies.jwt
 
     if (!token) {
         return res.status(statusMessage.UNAUTHORIZED).json({ message: "Token does not exists" })
@@ -86,7 +86,7 @@ export const premium = (req, res, next) => {
 
     req.user = verification
 
-    if (req.user.role !== 'admin' || req.user.role !== 'premium') {
+    if (req.user.role !== 'admin' && req.user.role !== 'premium') {
         return res.status(statusMessage.UNAUTHORIZED).json({ message: "You must be admin or premium" })
     }
 

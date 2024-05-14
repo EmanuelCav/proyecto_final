@@ -35,17 +35,14 @@ router.get('/products', auth, async (req, res) => {
 
 router.get('/cart', auth, async (req, res) => {
 
-    const { cid } = req.params
-
-    const cart = await Cart.findById(cid).lean()
-
-    if (!cart) {
-        return res.status({ message: "Cart does not exists" })
+    if (!req.cookies.isLoggedIn) {
+        res.redirect('/login')
+        return
     }
 
-    res.render('cartId', {
+    res.render('cart', {
         layout: 'home',
-        cart
+        user: req.user
     })
 })
 
@@ -98,7 +95,8 @@ router.get('/panel', [auth, admin], async (req, res) => {
     }
 
     res.render('panel', {
-        layout: 'home'
+        layout: 'home',
+        user: req.user
     })
 
 })
@@ -111,7 +109,8 @@ router.get('/profile', auth, async (req, res) => {
     }
 
     res.render('profile', {
-        layout: 'home'
+        layout: 'home',
+        user: req.user
     })
 
 })

@@ -1,5 +1,3 @@
-import fs from 'fs-extra'
-
 import MongoProductManager from '../dao/MongoProductManager.js';
 import { ProductDTO } from '../dto/product.dto.js';
 
@@ -55,38 +53,49 @@ export const productCreate = async (req, res) => {
     try {
 
         if (!title || !description || !code || !price || !stock || !category) {
-            CustomErrors.generateError(nameMessage.BAD_REQUEST, "There are empty fields. Please complete", statusMessage.BAD_REQUEST)
+            return res.status(statusMessage.BAD_REQUEST).render('panel', {
+                layout: 'home',
+                error: 'There are empty fields. Please complete',
+                user: req.user
+            })
         }
 
         let routeImages = []
 
         if (req.files.length === 0) {
-            CustomErrors.generateError(nameMessage.BAD_REQUEST, "You have upload images", statusMessage.BAD_REQUEST)
+            return res.status(statusMessage.BAD_REQUEST).render('panel', {
+                layout: 'home',
+                error: 'You have upload images',
+                user: req.user
+            })
         }
 
         if (req.files) {
             for (let i = 0; i < req.files.length; i++) {
                 const result = await cloud.uploader.upload(req.files[i].path)
-                routeImages.push(result.public_id)
-                await fs.unlink(req.files[i].path)
+                routeImages.push({
+                    image: result.url,
+                    imageId: result.public_id
+                })
             }
         }
 
-        const result = await ProductManager.createProducts(new ProductDTO({
+        await ProductManager.createProducts(new ProductDTO({
             title,
             description,
             code,
-            price,
+            price: Number(price),
             status: status === undefined ? true : status,
-            stock,
+            stock: Number(stock),
             category,
-            thumbnails: req.files ? routeImages : [],
-            owner: req.user._id ? req.user._id : 'admin'
+            thumbnails: routeImages,
+            owner: req.user.id
         }))
 
-        return res.status(statusMessage.OK).json({
-            message: "Product added successfully",
-            product: result
+        return res.status(statusMessage.CREATED).render('panel', {
+            layout: 'home',
+            message: 'Product created successfully',
+            user: req.user
         })
 
     } catch (error) {
