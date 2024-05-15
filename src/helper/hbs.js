@@ -7,4 +7,5 @@ export const equal = {
             return opts.inverse(this);
         }
     }
+    
 }

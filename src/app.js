@@ -30,6 +30,7 @@ app.engine('handlebars', engine({
 }));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(path.dirname(fileURLToPath(import.meta.url)), "./views"));
+app.set('view options', { layout: 'home' });
 
 app.use(morgan('dev'))
 app.use(express.json({ limit: '10mb' }))

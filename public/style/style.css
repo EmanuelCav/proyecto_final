@@ -91,3 +91,31 @@
     align-items: center;
     flex-wrap: wrap;
 }
+
+.product {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.not_products {
+    font-size: 26px;
+}
+
+.container-images-product {
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.image-secondary {
+    width: 120px;
+    height: 120px;
+}
+
+.info {
+    padding: 30px;
+}

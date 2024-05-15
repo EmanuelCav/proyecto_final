@@ -10,7 +10,7 @@ export const createCart = async (req, res) => {
 
     try {
 
-        const result = await CartManager.createCart(req.user._id)
+        const result = await CartManager.createCart(req.user.id)
 
         return res.status(statusMessage.OK).json({
             message: "Cart added successfully",

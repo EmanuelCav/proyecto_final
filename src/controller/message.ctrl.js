@@ -12,7 +12,7 @@ export const createMessages = async (req, res) => {
 
     try {
 
-        const showMessage = await messageDAO.createMessage(req.user._id, message)
+        const showMessage = await messageDAO.createMessage(req.user_id, message)
 
         if(!showMessage) {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Message field is empty. Please complete", statusMessage.BAD_REQUEST)

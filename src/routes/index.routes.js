@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
 router.get('/products', auth, async (req, res) => {
 
-    const { limit = 10 } = req.query
+    const { limit } = req.query
 
     if (!req.cookies.isLoggedIn) {
         res.redirect('/login')
@@ -40,9 +40,27 @@ router.get('/cart', auth, async (req, res) => {
         return
     }
 
+    let cart = await Cart.findOne({
+        user: req.user.id
+    }).lean()
+
+    if(!cart) {
+
+        const newCart = new Cart({
+            user: req.user.id
+        })
+
+        await newCart.save()
+
+        cart = await Cart.findOne({
+            user: req.user.id
+        }).lean()
+    }
+
     res.render('cart', {
         layout: 'home',
-        user: req.user
+        user: req.user,
+        cart
     })
 })
 
@@ -89,14 +107,19 @@ router.get('/logout', auth, async (req, res) => {
 
 router.get('/panel', [auth, admin], async (req, res) => {
 
+    const { limit } = req.query
+
     if (!req.cookies.isLoggedIn) {
         res.redirect('/login')
         return
     }
 
+    const products = await Product.find().limit(limit).lean()
+
     res.render('panel', {
         layout: 'home',
-        user: req.user
+        user: req.user,
+        products
     })
 
 })
@@ -111,6 +134,29 @@ router.get('/profile', auth, async (req, res) => {
     res.render('profile', {
         layout: 'home',
         user: req.user
+    })
+
+})
+
+router.get('/products/:id/', auth, async (req, res) => {
+
+    const { id } = req.params
+
+    if (!req.cookies.isLoggedIn) {
+        res.redirect('/login')
+        return
+    }
+
+    const product = await Product.findById(id).lean()
+
+    if(!product) {
+        return res.status(400).json({ message: "Product does not exists" })
+    }
+
+    res.render('product', {
+        layout: 'home',
+        user: req.user,
+        product
     })
 
 })

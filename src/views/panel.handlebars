@@ -52,4 +52,25 @@
     </form>
 </div>
 
+<div class="container-products" id="container-products">
+
+
+    {{#each products}}
+
+    <a href="/products/{{this._id}}">
+        <div class="container-product">
+            <img class="card-img-top" src={{this.thumbnails.[0].image}} alt="product">
+            <h5 class="card-title">{{this.title}}</h5>
+            <div class="content-product">
+                <p class="card-text text-success">${{this.price}}</p>
+                <p class="card-text">Unidades: {{this.stock}}</p>
+            </div>
+        </div>
+    </a>
+
+    {{/each}}
+
+
+</div>
+
 <script src="/js/auth.js"></script>
