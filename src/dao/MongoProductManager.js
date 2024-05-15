@@ -1,5 +1,7 @@
 import Product from'../model/product.js';
 
+import { cloud } from '../helper/cloud.js';
+
 export default class ProductDAO {
 
     async createProducts(product) {
@@ -41,7 +43,13 @@ export default class ProductDAO {
             return
         }
 
-        const result = await Product.findByIdAndDelete(id)
+        for (let i = 0; i < product.thumbnails.length; i++) {
+            await cloud.uploader.destroy(product.thumbnails[i].imageId)
+        }
+
+        await Product.findByIdAndDelete(id)
+
+        const result = await Product.find().lean()
 
         return result
     }

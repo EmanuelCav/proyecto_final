@@ -141,7 +141,7 @@ export const productDelete = async (req, res) => {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Product does not exists or you cannot remove this product", statusMessage.BAD_REQUEST)
         }
 
-        return res.status(statusMessage.OK).json({ message: "Product removed sucessfully" })
+        return res.status(statusMessage.OK).redirect('/panel')
 
     } catch (error) {
         req.logger.error(error.message)

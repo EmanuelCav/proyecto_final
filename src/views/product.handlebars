@@ -1,6 +1,6 @@
 <div class="product">
     <div class="image">
-        <img src={{product.thumbnails.[0].image}} alt="image">
+        <img src={{product.thumbnails.[0].image}}  class="main-image" alt="image">
         <div class="container-images-product">
 
             {{#each product.thumbnails}}
@@ -20,3 +20,15 @@
         </div>
     </div>
 </div>
+
+{{#if_eq user.role 'admin'}}
+
+<form method="POST" action="/api/products/{{product._id}}?_method=DELETE">
+    <button class="btn btn-danger" style="width: 100%; margin-top: 24px;">Delete</button>
+</form>
+
+<a href="/update/{{product._id}}">
+    <button class="btn btn-primary" style="width: 100%; margin-top: 24px;">Edit</button>
+</a>
+
+{{/if_eq}}

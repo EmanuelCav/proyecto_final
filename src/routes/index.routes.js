@@ -138,7 +138,7 @@ router.get('/profile', auth, async (req, res) => {
 
 })
 
-router.get('/products/:id/', auth, async (req, res) => {
+router.get('/products/:id', auth, async (req, res) => {
 
     const { id } = req.params
 
@@ -154,6 +154,29 @@ router.get('/products/:id/', auth, async (req, res) => {
     }
 
     res.render('product', {
+        layout: 'home',
+        user: req.user,
+        product
+    })
+
+})
+
+router.get('/update/:id', auth, async (req, res) => {
+
+    const { id } = req.params
+
+    if (!req.cookies.isLoggedIn) {
+        res.redirect('/login')
+        return
+    }
+
+    const product = await Product.findById(id).lean()
+
+    if(!product) {
+        return res.status(400).json({ message: "Product does not exists" })
+    }
+
+    res.render('update', {
         layout: 'home',
         user: req.user,
         product

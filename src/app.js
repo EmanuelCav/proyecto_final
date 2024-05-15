@@ -5,6 +5,7 @@ import passport from 'passport';
 import { engine } from 'express-handlebars'
 import { fileURLToPath } from 'url'
 import cookieParser from 'cookie-parser'
+import methodOverride from 'method-override'
 
 import { addLogger } from './lib/logger.js'
 
@@ -32,6 +33,7 @@ app.set('view engine', 'handlebars');
 app.set('views', path.join(path.dirname(fileURLToPath(import.meta.url)), "./views"));
 app.set('view options', { layout: 'home' });
 
+app.use(methodOverride('_method'));
 app.use(morgan('dev'))
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: false, limit: '10mb' }))
