@@ -18,16 +18,19 @@
         </div>
     </a>
 
-    <button class="btn btn-danger">Quit</button>
+    <form method="POST" action="/api/carts/{{this.cart}}/products/{{this._id}}?_method=DELETE">
+        <button class="btn btn-danger">Quit</button>
+    </form>
 
     {{/each}}
 
 </div>
 
 {{#if_gt cart.products.length 0}}
-<a href="/">
+<form method="POST" action="/api/carts/{{cart._id}}?_method=DELETE">
     <button class="btn btn-warning">REMOVE ALL</button>
-</a>
+</form>
+
 <a href="/">
     <button class="btn btn-primary">BUY NOW</button>
 </a>

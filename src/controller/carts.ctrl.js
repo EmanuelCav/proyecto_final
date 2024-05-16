@@ -79,9 +79,7 @@ export const removeProductCart = async (req, res) => {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Product or cart does not exists", statusMessage.BAD_REQUEST)
         }
 
-        return res.status(statusMessage.OK).json({
-            message: "Product removed successfully"
-        })
+        return res.status(statusMessage.OK).redirect('/cart')
 
     } catch (error) {
         req.logger.error(error.message)
@@ -122,16 +120,13 @@ export const removeAllProducts = async (req, res) => {
 
     try {
 
-        const result = CartManager.removeAllProductsFromCart(cid)
+        const result = await CartManager.removeAllProductsFromCart(cid)
 
         if (!result) {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Cart does not exists", statusMessage.BAD_REQUEST)
         }
 
-        return res.status(statusMessage.OK).json({
-            message: "Products removed successfully"
-        })
-
+        return res.status(statusMessage.OK).redirect('/cart')
 
     } catch (error) {
         req.logger.error(error.message)
@@ -146,7 +141,7 @@ export const purchaseCart = async (req, res) => {
 
     try {
 
-        const result = CartManager.purchaseCartProducts(cid)
+        const result = await CartManager.purchaseCartProducts(cid)
 
         if (!result) {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Error to generate ticket", statusMessage.BAD_REQUEST)
