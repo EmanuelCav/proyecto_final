@@ -26,7 +26,8 @@ import { equal } from './helper/hbs.js'
 
 app.engine('handlebars', engine({
     helpers: {
-        if_eq: equal.if_eq
+        if_eq: equal.if_eq,
+        if_gt: equal.if_gt
     }
 }));
 app.set('view engine', 'handlebars');

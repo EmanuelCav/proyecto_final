@@ -36,7 +36,7 @@ export default class CartDAO {
 
     }
 
-    async addProduct(quantity, cid, pid) {
+    async addProduct(cid, pid) {
 
         const cart = await Cart.findById(cid).populate({
             path: "products",
@@ -56,7 +56,6 @@ export default class CartDAO {
         }
 
         const newProductCart = new ProductCart({
-            quantity,
             cart: cid,
             product: pid
         })

@@ -48,21 +48,17 @@ export const getCart = async (req, res) => {
 
 export const addProductCart = async (req, res) => {
 
-    const { quantity } = req.body
     const { cid, pid } = req.params
 
     try {
 
-        const result = await CartManager.addProduct(quantity, cid, pid)
+        const result = await CartManager.addProduct(cid, pid)
 
         if (!result) {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Product or cart does not exists", statusMessage.BAD_REQUEST)
         }
 
-        return res.status(statusMessage.OK).json({
-            message: "Product added successfully",
-            cart: result
-        })
+        return res.status(statusMessage.OK).redirect('/cart')
 
     } catch (error) {
         req.logger.error(error.message)

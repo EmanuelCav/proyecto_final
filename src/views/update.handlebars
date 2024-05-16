@@ -1,0 +1,49 @@
+{{#if error}}
+<div class="alert alert-danger" id="container-message" role="alert">
+    {{error}}
+</div>
+{{/if}}
+
+{{#if message}}
+<div class="alert alert-success" id="message" role="alert">
+    {{message}}
+</div>
+{{/if}}
+
+<div class="container-auth">
+    <h1 class="text-title">UPDATE PRODUCT</h1>
+    <form action="/products" method="post" enctype="multipart/form-data" class="container-form">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" name="title" id="title" value="{{product.title}}" placeholder="Title">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" name="description" id="description" value="{{product.description}}"
+                placeholder="Product description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="description">Code</label>
+            <input type="text" class="form-control" name="code" id="code" value="{{product.code}}" placeholder="Code">
+        </div>
+        <div class="form-group">
+            <label for="description">Price</label>
+            <input type="text" class="form-control" name="price" id="price" value="{{product.price}}" placeholder="Price">
+        </div>
+        <div class="form-group">
+            <label for="description">Stock</label>
+            <input type="text" class="form-control" name="stock" id="stock" value="{{product.stock}}" placeholder="Stock">
+        </div>
+        <div class="form-group">
+            <label for="description">Category</label>
+            <select name="category" id="category" class="form-control">
+                <option value="{{category}}" hidden="hidden" selected="selected">{{product.category}}</option>
+                <option value="Zapatillas deportivas">Zapatillas deportivas</option>
+                <option value="Zapatos">Zapatos</option>
+                <option value="Verano">Verano</option>
+                <option value="Invierno">Invierno</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Accept</button>
+    </form>
+</div>

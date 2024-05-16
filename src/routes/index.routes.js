@@ -42,7 +42,12 @@ router.get('/cart', auth, async (req, res) => {
 
     let cart = await Cart.findOne({
         user: req.user.id
-    }).lean()
+    }).lean().populate({
+        path: "products",
+        populate: {
+            path: "product"
+        }
+    })
 
     if(!cart) {
 
@@ -54,8 +59,15 @@ router.get('/cart', auth, async (req, res) => {
 
         cart = await Cart.findOne({
             user: req.user.id
-        }).lean()
+        }).lean().populate({
+            path: "products",
+            populate: {
+                path: "product"
+            }
+        })
     }
+
+    console.log(cart);
 
     res.render('cart', {
         layout: 'home',
@@ -153,10 +165,19 @@ router.get('/products/:id', auth, async (req, res) => {
         return res.status(400).json({ message: "Product does not exists" })
     }
 
+    const cart = await Cart.findOne({
+        user: req.user.id
+    }).lean()
+
+    if(!cart) {
+        return res.status(400).json({ message: "Cart does not exists" })
+    }
+
     res.render('product', {
         layout: 'home',
         user: req.user,
-        product
+        product,
+        cart
     })
 
 })

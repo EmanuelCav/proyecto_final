@@ -6,18 +6,31 @@
 <div class="container-products" id="container-cart">
 
     {{#each cart.products}}
-    <div class="product">
-        <div class="contain-title">
-            <p class="product-title">{{this.product.title}}</p>
-            <p class="product-description">{{this.product.description}}</p>
+
+    <a href="/products/{{this.product._id}}">
+        <div class="container-product">
+            <img class="card-img-top" src={{this.product.thumbnails.[0].image}} alt="product">
+            <h5 class="card-title">{{this.product.title}}</h5>
+            <div class="content-product">
+                <p class="card-text text-success">${{this.product.price}}</p>
+                <p class="card-text">Stock: {{this.product.stock}}</p>
+            </div>
         </div>
-        <div class="contain-price">
-            <p class="product-price">${{this.product.price}}</p>
-            <p class="product-stock ">unidades: {{this.product.stock}}</p>
-        </div>
-    </div>
+    </a>
+
+    <button class="btn btn-danger">Quit</button>
+
     {{/each}}
 
 </div>
+
+{{#if_gt cart.products.length 0}}
+<a href="/">
+    <button class="btn btn-warning">REMOVE ALL</button>
+</a>
+<a href="/">
+    <button class="btn btn-primary">BUY NOW</button>
+</a>
+{{/if_gt}}
 
 <script src="/js/products.js"></script>
