@@ -12,7 +12,7 @@ router.get('/api/products/:pid', auth, productCtrl.productGet)
 
 router.post('/products', [auth, premium, admin], upload.array("files", 10), productCtrl.productCreate)
 
-router.put('/update/products/:pid', [auth, admin], productCtrl.productUpdate)
+router.put('/products/update/:pid', [auth, admin], productCtrl.productUpdate)
 
 router.delete('/api/products/:pid', [auth, premium, admin], productCtrl.productDelete)
 

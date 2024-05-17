@@ -194,6 +194,8 @@ export const register = async (req, res) => {
 
     try {
 
+        const letters = /^[a-zA-Z]*$/
+
         if (!email || !password || !firstname || !lastname || !confirm) {
             return res.status(statusMessage.BAD_REQUEST).render('register', {
                 layout: 'home',
@@ -212,6 +214,13 @@ export const register = async (req, res) => {
             return res.status(statusMessage.BAD_REQUEST).render('register', {
                 layout: 'home',
                 error: 'Passwords do not match'
+            })
+        }
+
+        if (!letters.test(firstname) || !letters.test(lastname)) {
+            return res.status(statusMessage.BAD_REQUEST).render('register', {
+                layout: 'home',
+                error: 'Only letters are allowed in name field'
             })
         }
 

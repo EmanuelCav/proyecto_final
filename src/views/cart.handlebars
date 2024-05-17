@@ -22,6 +22,14 @@
         <button class="btn btn-danger">Quit</button>
     </form>
 
+    <p>Quantity: {{this.quantity}}</p>
+    <form method="POST" action="/api/carts/{{this.cart}}/products/{{this._id}}/{{this.quantity}}?_method=PUT&operation=sub">
+        <button class="btn btn-primary">-</button>
+    </form>
+    <form method="POST" action="/api/carts/{{this.cart}}/products/{{this._id}}/{{this.quantity}}?_method=PUT&operation=sum">
+        <button class="btn btn-primary">+</button>
+    </form>
+
     {{/each}}
 
 </div>

@@ -1,3 +1,5 @@
+import Product from '../model/product.js'
+
 import MongoProductManager from '../dao/MongoProductManager.js';
 import { ProductDTO } from '../dto/product.dto.js';
 
@@ -52,10 +54,28 @@ export const productCreate = async (req, res) => {
 
     try {
 
+        const numbers = /^[0-9]*$/
+
         if (!title || !description || !code || !price || !stock || !category) {
             return res.status(statusMessage.BAD_REQUEST).render('panel', {
                 layout: 'home',
                 error: 'There are empty fields. Please complete',
+                user: req.user
+            })
+        }
+
+        if(!numbers.test(price)) {
+            return res.status(statusMessage.BAD_REQUEST).render('panel', {
+                layout: 'home',
+                error: 'Price field must be a number',
+                user: req.user
+            })
+        }
+
+        if(!numbers.test(stock)) {
+            return res.status(statusMessage.BAD_REQUEST).render('panel', {
+                layout: 'home',
+                error: 'Stock field must be a number',
                 user: req.user
             })
         }
@@ -107,9 +127,45 @@ export const productCreate = async (req, res) => {
 
 export const productUpdate = async (req, res) => {
 
+    const { title, description, code, price, stock, category } = req.body
     const { pid } = req.params
 
     try {
+
+        const numbers = /^[0-9]*$/
+
+        const product = await Product.findById(pid).lean()
+
+        if (!product) {
+            CustomErrors.generateError(nameMessage.BAD_REQUEST, "Product does not exists", statusMessage.BAD_REQUEST)
+        }
+
+        if (!title || !description || !code || !price || !stock || !category) {
+            return res.status(statusMessage.BAD_REQUEST).render('update', {
+                layout: 'home',
+                user: req.user,
+                product,
+                error: "There are empty fields"
+            })
+        }
+
+        if(!numbers.test(price)) {
+            return res.status(statusMessage.BAD_REQUEST).render('panel', {
+                layout: 'home',
+                user: req.user,
+                product,
+                error: 'Price field must be a number',
+            })
+        }
+
+        if(!numbers.test(stock)) {
+            return res.status(statusMessage.BAD_REQUEST).render('panel', {
+                layout: 'home',
+                user: req.user,
+                product,
+                error: 'Stock field must be a number',
+            })
+        }
 
         const result = await ProductManager.updateProduct(pid, req.body)
 
@@ -117,9 +173,11 @@ export const productUpdate = async (req, res) => {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Product does not exists", statusMessage.BAD_REQUEST)
         }
 
-        return res.status(statusMessage.CREATED).json({
-            message: "Product updated succesfully",
-            product: result
+        return res.status(statusMessage.CREATED).render('update', {
+            layout: 'home',
+            user: req.user,
+            product: result,
+            message: "Product updated successfully"
         })
 
     } catch (error) {

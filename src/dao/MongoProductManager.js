@@ -64,7 +64,7 @@ export default class ProductDAO {
 
         const result = await Product.findByIdAndUpdate(id, product, {
             new: true
-        })
+        }).lean()
 
         return result
 

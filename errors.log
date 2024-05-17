@@ -149,3 +149,6 @@ error: Cast to ObjectId failed for value "panel" (type string) at path "_id" for
 error: Cast to ObjectId failed for value "panel" (type string) at path "_id" for model "Product"
 error: Cast to ObjectId failed for value "alt="image"" (type string) at path "_id" for model "Product"
 error: Cast to ObjectId failed for value "alt="product"" (type string) at path "_id" for model "Product"
+error: id is not defined
+error: id is not defined
+error: id is not defined

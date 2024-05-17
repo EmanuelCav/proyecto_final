@@ -67,8 +67,6 @@ router.get('/cart', auth, async (req, res) => {
         })
     }
 
-    console.log(cart);
-
     res.render('cart', {
         layout: 'home',
         user: req.user,
@@ -182,7 +180,7 @@ router.get('/products/:id', auth, async (req, res) => {
 
 })
 
-router.get('/update/:id', auth, async (req, res) => {
+router.get('/products/update/:id', [auth, admin], async (req, res) => {
 
     const { id } = req.params
 

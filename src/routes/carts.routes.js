@@ -15,7 +15,7 @@ router.patch('/api/carts/:cid/products/:pid', auth, cartCtrl.addProductCart)
 router.delete('/api/carts/:cid/products/:pid', auth, cartCtrl.removeProductCart)
 router.delete('/api/carts/:cid', auth, cartCtrl.removeAllProducts)
 
-router.put('/api/carts/:cid/products/:pid', auth, cartCtrl.quantityProductCart)
+router.put('/api/carts/:cid/products/:pid/:quantity', auth, cartCtrl.quantityProductCart)
 
 router.patch('/:cid/purchase', auth, cartCtrl.purchaseCart)
 

@@ -90,22 +90,18 @@ export const removeProductCart = async (req, res) => {
 
 export const quantityProductCart = async (req, res) => {
 
-    const { cid, pid } = req.params
-    const { quantity } = req.body
+    const { cid, pid, quantity } = req.params
+    const { operation } = req.query
 
     try {
 
-        const result = await CartManager.updateQuantityProducts(quantity, cid, pid)
+        const result = await CartManager.updateQuantityProducts(operation === 'sum' ? Number(quantity) + 1 : Number(quantity) - 1, cid, pid)
 
         if (!result) {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Product or cart does not exists", statusMessage.BAD_REQUEST)
         }
 
-        return res.status(statusMessage.CREATED).json({
-            message: "Quantity updated successfully",
-            cart: result
-        })
-
+        return res.status(statusMessage.CREATED).redirect('/cart')
 
     } catch (error) {
         req.logger.error(error.message)
