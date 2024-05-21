@@ -106,4 +106,22 @@ export default class UserDAO {
 
     }
 
+    async deleteUser(id, email) {
+
+        const user = await User.findById(id)
+
+        if (!user) {
+            return
+        }
+
+        await User.findByIdAndDelete(id)
+
+        return await User.find({
+            email: {
+                $nin: [email]
+            }
+        }).select("-password").lean()
+
+    }
+
 }

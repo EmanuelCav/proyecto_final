@@ -152,3 +152,5 @@ error: Cast to ObjectId failed for value "alt="product"" (type string) at path "
 error: id is not defined
 error: id is not defined
 error: id is not defined
+error: User does not exists
+error: email is not defined

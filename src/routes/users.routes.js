@@ -11,7 +11,7 @@ import { documents } from '../lib/images.js';
 
 const router = Router()
 
-router.get('/api/users', userCtrl.users)
+router.get('/api/users', [auth, admin], userCtrl.users)
 
 router.post('/register', userCtrl.register)
 router.post('/login', userCtrl.login)
@@ -34,6 +34,7 @@ router.get('/api/sesions/current', auth, passport.authenticate("current"), (req,
 router.post('/api/users', userCtrl.forgotPassword)
 router.post('/api/users/:uid/documents', auth, documents.array("files", 3), userCtrl.uploadDocument)
 
+router.delete('/api/users/:id', [auth, admin], userCtrl.removeUser)
 router.delete('/api/users', [auth, admin], userCtrl.removeUsers)
 
 router.put('/api/users/:email', emailAuth, userCtrl.recoverPassword)

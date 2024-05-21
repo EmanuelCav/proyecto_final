@@ -1,0 +1,23 @@
+{{#if message}}
+<div class="alert alert-success" id="message" role="alert">
+    {{message}}
+</div>
+{{/if}}
+
+
+<div class="container-users">
+    {{#each users}}
+    <div class="contain-user">
+        <p>{{this.first_name}} {{this.last_name}} - {{this.role}}</p>
+        <div>
+            <form method="POST" action="/api/users/{{this._id}}?_method=DELETE">
+                <button class="btn btn-danger">
+                    Remove
+                </button>
+            </form>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<script src="/js/products.js"></script>

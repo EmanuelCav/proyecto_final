@@ -176,7 +176,7 @@ export const login = async (req, res) => {
 
         const token = generateToken(user._id, user.role, user.email)
 
-        res.cookie('jwt',token, { httpOnly: true, secure: true, maxAge: 3600000 })
+        res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: 3600000 })
         res.cookie('isLoggedIn', true, { httpOnly: true, secure: true, maxAge: 3600000 })
 
         return res.status(statusMessage.OK).redirect('/products')
@@ -276,7 +276,33 @@ export const removeUsers = async (req, res) => {
 
         await userManager.inactiveUsers()
 
-        return res.status(200).jso({ message: "User removed successfully" })
+        return res.status(statusMessage.OK).json({ message: "User removed successfully" })
+
+    } catch (error) {
+        req.logger.error(error.message)
+        CustomErrors.generateError(nameMessage.INTERNAL_SERVER_ERROR, error.message, statusMessage.INTERNAL_SERVER_ERROR)
+    }
+
+}
+
+export const removeUser = async (req, res) => {
+
+    const { id } = req.params
+
+    try {
+
+        const result = await userManager.deleteUser(id, req.user.email)
+
+        if (!result) {
+            CustomErrors.generateError(nameMessage.BAD_REQUEST, "User does not exists", statusMessage.BAD_REQUEST)
+        }
+
+        return res.status(statusMessage.OK).render('users', {
+            layout: 'home',
+            user: req.user,
+            users: result,
+            message: "User removed successfully"
+        })
 
     } catch (error) {
         req.logger.error(error.message)

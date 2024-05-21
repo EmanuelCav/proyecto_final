@@ -49,7 +49,7 @@ router.get('/cart', auth, async (req, res) => {
         }
     })
 
-    if(!cart) {
+    if (!cart) {
 
         const newCart = new Cart({
             user: req.user.id
@@ -159,7 +159,7 @@ router.get('/products/:id', auth, async (req, res) => {
 
     const product = await Product.findById(id).lean()
 
-    if(!product) {
+    if (!product) {
         return res.status(400).json({ message: "Product does not exists" })
     }
 
@@ -167,7 +167,7 @@ router.get('/products/:id', auth, async (req, res) => {
         user: req.user.id
     }).lean()
 
-    if(!cart) {
+    if (!cart) {
         return res.status(400).json({ message: "Cart does not exists" })
     }
 
@@ -191,7 +191,7 @@ router.get('/products/update/:id', [auth, admin], async (req, res) => {
 
     const product = await Product.findById(id).lean()
 
-    if(!product) {
+    if (!product) {
         return res.status(400).json({ message: "Product does not exists" })
     }
 
@@ -199,6 +199,27 @@ router.get('/products/update/:id', [auth, admin], async (req, res) => {
         layout: 'home',
         user: req.user,
         product
+    })
+
+})
+
+router.get('/users', admin, async (req, res) => {
+
+    if (!req.cookies.isLoggedIn) {
+        res.redirect('/login')
+        return
+    }
+
+    const users = await User.find({
+        email: {
+            $nin: [req.user.email]
+        }
+    }).select("-password").lean()
+
+    res.render('users', {
+        layout: 'home',
+        user: req.user,
+        users
     })
 
 })

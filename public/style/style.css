@@ -124,3 +124,21 @@
     width: 500px;
     height: 500px;
 }
+
+.container-users {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.contain-user {
+    margin-top: 14px;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
