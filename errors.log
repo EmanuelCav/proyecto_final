@@ -154,3 +154,6 @@ error: id is not defined
 error: id is not defined
 error: User does not exists
 error: email is not defined
+error: You have to upload a file
+error: Cannot access 'user' before initialization
+error: Cannot access 'user' before initialization

@@ -32,7 +32,7 @@ router.get('/api/sesions/current', auth, passport.authenticate("current"), (req,
 })
 
 router.post('/api/users', userCtrl.forgotPassword)
-router.post('/api/users/:uid/documents', auth, documents.array("files", 3), userCtrl.uploadDocument)
+router.post('/profile', auth, documents.array("files", 3), userCtrl.uploadDocument)
 
 router.delete('/api/users/:id', [auth, admin], userCtrl.removeUser)
 router.delete('/api/users', [auth, admin], userCtrl.removeUsers)

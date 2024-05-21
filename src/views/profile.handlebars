@@ -1,6 +1,29 @@
-<form action="">
+{{#if error}}
+<div class="alert alert-danger" id="container-message" role="alert">
+    {{error}}
+</div>
+{{/if}}
+
+{{#if message}}
+<div class="alert alert-success" id="container-message" role="alert">
+    {{message}}
+</div>
+{{/if}}
+
+<h2>{{profile.first_name}} {{profile.last_name}}</h2>
+
+{{#if_gt profile.documents.length 0}}
+<h1>Documents uploaded successfully</h1>
+{{else}}
+<form action="/profile" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="description">Documents</label>
         <input type="file" class="form-control" name="files" id="files" value="{{files}}" multiple="multiple">
     </div>
+    <button class="btn btn-primary">
+        UPLOAD
+    </button>
 </form>
+{{/if_gt}}
+
+<script src="/js/products.js"></script>

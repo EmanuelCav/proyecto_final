@@ -48,3 +48,20 @@ export const forgotPasswordEmail = async (email) => {
     }
 
 }
+
+export const removeProductEmail = async (email) => {
+
+    try {
+
+        await transport.sendMail({
+            from: `'EMAILS' ${my_mail}`,
+            to: email,
+            subject: "eCommerce - Product removed",
+            html: "Product removed successfully"
+        })
+        
+    } catch (error) {
+        throw (error)
+    }
+
+}

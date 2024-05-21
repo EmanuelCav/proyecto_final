@@ -4,6 +4,10 @@
 </div>
 {{/if}}
 
+{{#if_eq users.length 0}}
+<p>There are not users</p>
+{{/if_eq}}
+
 
 <div class="container-users">
     {{#each users}}

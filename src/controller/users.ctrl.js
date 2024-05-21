@@ -109,7 +109,7 @@ export const updatePremium = async (req, res) => {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "User does not exists or documents have not valid information", statusMessage.BAD_REQUEST)
         }
 
-        return res.status(200).json({ message: "Now user is premium" })
+        return res.status(statusMessage.OK).json({ message: "Now user is premium" })
 
     } catch (error) {
         req.logger.error(error.message)
@@ -120,21 +120,36 @@ export const updatePremium = async (req, res) => {
 
 export const uploadDocument = async (req, res) => {
 
-    const { uid } = req.params
-
     try {
 
+        const user = await User.findById(req.user.id).select("-password").lean()
+
         if (req.files.length === 0) {
-            CustomErrors.generateError(nameMessage.BAD_REQUEST, "You have to upload a file", statusMessage.BAD_REQUEST)
+            return res.status(statusMessage.BAD_REQUEST).render('profile', {
+                layout: 'home',
+                user: req.user,
+                profile: user,
+                error: "You have to upload a file"
+            })
         }
 
-        const result = await userManager.documents(uid, req.files)
+        const result = await userManager.documents(req.user.id, req.files)
 
         if (!result) {
-            CustomErrors.generateError(nameMessage.BAD_REQUEST, "User does not exists or user is not premium", statusMessage.BAD_REQUEST)
+            return res.status(statusMessage.BAD_REQUEST).render('profile', {
+                layout: 'home',
+                user: req.user,
+                profile: user,
+                error: "User does not exists or user is not premium"
+            })
         }
 
-        return res.status(200).json({ message: "File uploaded successfully" })
+        return res.status(statusMessage.BAD_REQUEST).render('profile', {
+            layout: 'home',
+            user: req.user,
+            profile: result,
+            message: "Documents uploaded successfully"
+        })
 
     } catch (error) {
         req.logger.error(error.message)

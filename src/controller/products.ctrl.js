@@ -7,6 +7,7 @@ import CustomErrors from '../lib/errors.js';
 
 import { statusMessage, nameMessage } from '../helper/statusMessage.js';
 import { cloud } from '../helper/cloud.js';
+import { removeProductEmail } from '../helper/message.js';
 
 const ProductManager = new MongoProductManager()
 
@@ -197,6 +198,12 @@ export const productDelete = async (req, res) => {
 
         if (!result) {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Product does not exists or you cannot remove this product", statusMessage.BAD_REQUEST)
+        }
+
+        const user = await User.findById(req.user.id)
+
+        if(user.role === 'premium') {
+            await removeProductEmail()
         }
 
         return res.status(statusMessage.OK).redirect('/panel')

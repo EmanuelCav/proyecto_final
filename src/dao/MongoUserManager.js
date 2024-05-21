@@ -84,13 +84,13 @@ export default class UserDAO {
             })
         }
 
-        await User.findByIdAndUpdate(id, {
+        const userUpdated = await User.findByIdAndUpdate(id, {
             status: true
         }, {
             new: true
         })
 
-        return result
+        return userUpdated
 
     }
 

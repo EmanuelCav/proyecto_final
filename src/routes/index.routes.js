@@ -141,9 +141,12 @@ router.get('/profile', auth, async (req, res) => {
         return
     }
 
+    const user = await User.findById(req.user.id).select("-password").lean()
+
     res.render('profile', {
         layout: 'home',
-        user: req.user
+        user: req.user,
+        profile: user
     })
 
 })
