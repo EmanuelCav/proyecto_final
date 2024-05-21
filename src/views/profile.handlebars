@@ -10,7 +10,18 @@
 </div>
 {{/if}}
 
+<img src="{{profile.image.image}}" alt="profile-image" style="width: 300px; height: 300px; border-radius: 50%;">
 <h2>{{profile.first_name}} {{profile.last_name}}</h2>
+<form action="/profile?_method=PUT" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="_method" value="PUT">
+    <div class="form-group">
+        <label for="description">Profile image</label>
+        <input type="file" class="form-control" name="file" id="file" value="{{file}}" multiple="multiple">
+    </div>
+    <button class="btn btn-primary">
+        UPLOAD PROFILE
+    </button>
+</form>
 
 {{#if_gt profile.documents.length 0}}
 <h1>Documents uploaded successfully</h1>
@@ -21,7 +32,7 @@
         <input type="file" class="form-control" name="files" id="files" value="{{files}}" multiple="multiple">
     </div>
     <button class="btn btn-primary">
-        UPLOAD
+        UPLOAD DOCUMENTS
     </button>
 </form>
 {{/if_gt}}

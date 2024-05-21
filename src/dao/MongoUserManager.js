@@ -124,4 +124,19 @@ export default class UserDAO {
 
     }
 
+    async uploadPhoto(id, image) {
+
+        const result = await User.findByIdAndUpdate(id, {
+            image: {
+                image: image.url,
+                imageId: image.public_id
+            }
+        }, {
+            new: true
+        }).select("-password").lean()
+
+        return result
+
+    }
+
 }

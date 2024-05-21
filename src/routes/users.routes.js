@@ -7,7 +7,7 @@ import { auth, emailAuth, admin } from'../middleware/auth.js';
 
 import { UserDTO } from '../dto/user.dto.js';
 
-import { documents } from '../lib/images.js';
+import { documents, profiles } from '../lib/images.js';
 
 const router = Router()
 
@@ -38,5 +38,6 @@ router.delete('/api/users/:id', [auth, admin], userCtrl.removeUser)
 router.delete('/api/users', [auth, admin], userCtrl.removeUsers)
 
 router.put('/api/users/:email', emailAuth, userCtrl.recoverPassword)
+router.put('/profile', auth, profiles.single("file"), userCtrl.updateProfileImage)
 
 export default router

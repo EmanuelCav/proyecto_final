@@ -25,6 +25,11 @@ const userSchema = new Schema({
         lowercase: true
     },
 
+    image: {
+        imageId: String,
+        image: String
+    },
+
     age: {
         type: Number
     },

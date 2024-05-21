@@ -143,6 +143,8 @@ router.get('/profile', auth, async (req, res) => {
 
     const user = await User.findById(req.user.id).select("-password").lean()
 
+    console.log(user);
+
     res.render('profile', {
         layout: 'home',
         user: req.user,

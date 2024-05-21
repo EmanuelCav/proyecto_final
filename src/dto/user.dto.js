@@ -6,6 +6,7 @@ export class RegisterDTO {
         this.email = data.email
         this.password = data.password
         this.role = data.role
+        this.image = data.image
     }
 
 }

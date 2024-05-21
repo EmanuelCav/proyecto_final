@@ -157,3 +157,4 @@ error: email is not defined
 error: You have to upload a file
 error: Cannot access 'user' before initialization
 error: Cannot access 'user' before initialization
+error: user is not defined

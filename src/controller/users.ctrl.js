@@ -1,5 +1,3 @@
-import passport from 'passport';
-
 import MongoUserManager from '../dao/MongoUserManager.js';
 
 import CustomErrors from '../lib/errors.js';
@@ -10,6 +8,7 @@ import { statusMessage, nameMessage } from '../helper/statusMessage.js';
 import { generateToken, linkToken } from '../helper/token.js';
 import { comparePassword, hashPassword } from '../helper/encrypt.js';
 import { infoEmail } from '../helper/message.js';
+import { cloud } from "../helper/cloud.js";
 
 import { RegisterDTO } from '../dto/user.dto.js';
 
@@ -81,21 +80,47 @@ export const recoverPassword = async (req, res) => {
 
 }
 
-// export const login = passport.authenticate('login', {
-//     failureRedirect: '/login',
-//     successRedirect: '/products',
-//     successFlash: true,
-//     failureFlash: true,
-//     session: false
-// })
+export const updateProfileImage = async (req, res) => {
 
-// export const register = passport.authenticate('register', {
-//     failureRedirect: '/register',
-//     successRedirect: '/products',
-//     successFlash: true,
-//     failureFlash: true,
-//     session: false
-// })
+    try {
+
+        const user = await User.findById(req.user.id).select("-password").lean()
+
+        if (!req.file) {
+            return res.status(statusMessage.BAD_REQUEST).render('profile', {
+                layout: 'home',
+                user: req.user,
+                profile: user,
+                error: "You have to upload a file to change profile image"
+            })
+        }
+
+        const image = await cloud.uploader.upload(req.file.path)
+
+        const result = await userManager.uploadPhoto(req.user.id, image)
+
+        if (!result) {
+            return res.status(statusMessage.BAD_REQUEST).render('profile', {
+                layout: 'home',
+                user: req.user,
+                profile: user,
+                error: "User does not exists or user is not premium"
+            })
+        }
+
+        return res.status(statusMessage.OK).render('profile', {
+            layout: 'home',
+            user: req.user,
+            profile: result,
+            message: "Documents uploaded successfully"
+        })
+
+    } catch (error) {
+        req.logger.error(error.message)
+        CustomErrors.generateError(nameMessage.INTERNAL_SERVER_ERROR, error.message, statusMessage.INTERNAL_SERVER_ERROR)
+    }
+
+}
 
 export const updatePremium = async (req, res) => {
 
@@ -144,7 +169,7 @@ export const uploadDocument = async (req, res) => {
             })
         }
 
-        return res.status(statusMessage.BAD_REQUEST).render('profile', {
+        return res.status(statusMessage.OK).render('profile', {
             layout: 'home',
             user: req.user,
             profile: result,
@@ -255,7 +280,11 @@ export const register = async (req, res) => {
             last_name: lastname,
             email,
             password: hashedPassword,
-            role: role ? role : 'user'
+            role: role ? role : 'user',
+            image: {
+                image: "https://exoffender.org/wp-content/uploads/2016/09/empty-profile.png",
+                imageId: ""
+            }
         }))
 
         const userSaved = await newUser.save()
