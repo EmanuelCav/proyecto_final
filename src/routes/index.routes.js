@@ -6,6 +6,12 @@ import User from '../model/user.js'
 
 import { auth, admin, emailAuth } from '../middleware/auth.js'
 
+import Stripe from 'stripe'
+
+import { secret_key } from '../config/config.js';
+
+const stripe = new Stripe(`${secret_key}`)
+
 const router = Router()
 
 router.get('/', (req, res) => {
@@ -23,7 +29,11 @@ router.get('/products', auth, async (req, res) => {
         return
     }
 
-    const products = await Product.find().limit(limit).lean()
+    const products = await Product.find({
+        stock: {
+            $gt: 0
+        }
+    }).limit(limit).lean()
 
     res.render('products', {
         layout: 'home',

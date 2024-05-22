@@ -137,13 +137,18 @@ export const purchaseCart = async (req, res) => {
 
     try {
 
-        const result = await CartManager.purchaseCartProducts(cid)
+        const result = await CartManager.purchaseCartProducts(cid, req.user.id)
 
         if (!result) {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Error to generate ticket", statusMessage.BAD_REQUEST)
         }
 
-        return res.status(statusMessage.OK).json(result)
+        return res.status(statusMessage.OK).render('products', {
+            layout: 'home',
+            message: "Thank you for your purchase",
+            products: result,
+            user: req.user
+        })
 
     } catch (error) {
         req.logger.error(error.message)

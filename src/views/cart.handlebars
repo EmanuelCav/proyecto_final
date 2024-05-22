@@ -39,9 +39,9 @@
     <button class="btn btn-warning">REMOVE ALL</button>
 </form>
 
-<a href="/">
+<form method="POST" action="/{{cart._id}}/purchase">
     <button class="btn btn-primary">BUY NOW</button>
-</a>
+</form>
 {{/if_gt}}
 
 <script src="/js/products.js"></script>

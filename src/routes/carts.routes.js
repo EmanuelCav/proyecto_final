@@ -17,6 +17,6 @@ router.delete('/api/carts/:cid', auth, cartCtrl.removeAllProducts)
 
 router.put('/api/carts/:cid/products/:pid/:quantity', auth, cartCtrl.quantityProductCart)
 
-router.patch('/:cid/purchase', auth, cartCtrl.purchaseCart)
+router.post('/:cid/purchase', auth, cartCtrl.purchaseCart)
 
 export default router

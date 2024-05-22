@@ -32,20 +32,20 @@
             </form>
             {{else}}
 
-            {{#if_eq this.role 'premiun'}}
+            {{#if_eq this.role 'premium'}}
             <form method="POST" action="/users/{{this._id}}?_method=PUT&role=user">
                 <input type="hidden" name="_method" value="PUT">
                 <button class="btn btn-success">
                     Change to admin
                 </button>
             </form>
-            {{/if_eq}}
-
+            {{else}}
             <form method="POST" action="/users/{{this._id}}?_method=PUT&role=user">
-                <button class="btn btn-danger">
+                <button class="btn btn-success">
                     Change to user
                 </button>
             </form>
+            {{/if_eq}}
             {{/if_eq}}
         </div>
     </div>

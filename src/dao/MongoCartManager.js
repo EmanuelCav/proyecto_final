@@ -1,11 +1,17 @@
+import Stripe from 'stripe'
+
 import Cart from '../model/cart.js';
 import ProductCart from '../model/productCart.js';
-import Product from'../model/product.js';
-import Ticket from'../model/ticket.js';
+import Product from '../model/product.js';
+import Ticket from '../model/ticket.js';
 
 import ProductManager from './MongoProductManager.js';
 
+import { secret_key } from '../config/config.js';
+
 const productManager = new ProductManager()
+
+const stripe = new Stripe(`${secret_key}`)
 
 export default class CartDAO {
 
@@ -195,7 +201,7 @@ export default class CartDAO {
 
     }
 
-    async purchaseCartProducts(cid) {
+    async purchaseCartProducts(cid, userId) {
 
         const cart = await Cart.findById(cid).populate({
             path: "products",
@@ -211,13 +217,18 @@ export default class CartDAO {
 
         let productsFail = []
 
+        let sum = 0
+
         for (let i = 0; i < cart.products.length; i++) {
+
             if (cart.products[i].product.stock > 0) {
+
                 await Product.findByIdAndUpdate(cart.products[i].product._id, {
                     stock: cart.products[i].product.stock - cart.products[i].quantity
                 }, {
                     new: true
                 })
+
                 await Cart.findByIdAndUpdate(cid, {
                     $pull: {
                         products: cart.products[i]._id
@@ -225,25 +236,39 @@ export default class CartDAO {
                 }, {
                     new: true
                 })
+
+                sum+=cart.products[i].product.price
+
             } else {
                 productsFail.push(cart.products[i].product._id)
             }
-        }
 
-        if(productsFail.length > 0) {
-            return productsFail
         }
 
         const tickets = await Ticket.find()
 
         const newTicket = new Ticket({
             code: `${tickets.length + 1}`,
-            purchase_datetime: new Date().now(),
+            purchase_datetime: new Date(),
             amount: cart.products.length,
             purchaser: cart.user.email
         })
 
-        return await newTicket.save()
+        await newTicket.save()
+
+        await stripe.paymentIntents.create({
+            amount: sum,
+            currency: 'usd',
+            metadata: {
+                userId
+            }
+        })
+
+        return await Product.find({
+            stock: {
+                $gt: 0
+            }
+        }).lean()
 
     }
 
