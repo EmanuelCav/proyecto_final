@@ -65,3 +65,20 @@ export const removeProductEmail = async (email) => {
     }
 
 }
+
+export const inactiveEmail = async (email) => {
+
+    try {
+
+        await transport.sendMail({
+            from: `'EMAILS' ${my_mail}`,
+            to: email,
+            subject: "eCommerce - Deleted account",
+            html: "Your account has been deleted due to inactivity"
+        })
+        
+    } catch (error) {
+        throw (error)
+    }
+
+}

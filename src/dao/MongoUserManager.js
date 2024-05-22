@@ -1,6 +1,6 @@
 import User from '../model/user.js';
 
-import { forgotPasswordEmail } from '../helper/message.js';
+import { forgotPasswordEmail, inactiveEmail } from '../helper/message.js';
 import { hashPassword } from '../helper/encrypt.js';
 
 export default class UserDAO {
@@ -96,11 +96,17 @@ export default class UserDAO {
 
     async inactiveUsers() {
 
-        const users = await User.find({
+        const users = await User.updateMany({
             last_connection: {
                 $lte: new Date(new Date() - 1000 * 86400 * 2)
             }
-        })
+        }, {
+            status: false
+        }).select("-password")
+
+        for (let i = 0; i < users.length; i++) {
+            await inactiveEmail(users[i].email)
+        }
 
         return users
 
@@ -114,12 +120,17 @@ export default class UserDAO {
             return
         }
 
-        await User.findByIdAndDelete(id)
+        await User.findByIdAndUpdate(id, {
+            status: false
+        }, {
+            new: true
+        })
 
         return await User.find({
             email: {
                 $nin: [email]
-            }
+            },
+            status: true
         }).select("-password").lean()
 
     }
@@ -156,7 +167,8 @@ export default class UserDAO {
         return await User.find({
             email: {
                 $nin: [email]
-            }
+            },
+            status: true
         }).select("-password").lean()
 
     }

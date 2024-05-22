@@ -6,12 +6,6 @@ import User from '../model/user.js'
 
 import { auth, admin, emailAuth } from '../middleware/auth.js'
 
-import Stripe from 'stripe'
-
-import { secret_key } from '../config/config.js';
-
-const stripe = new Stripe(`${secret_key}`)
-
 const router = Router()
 
 router.get('/', (req, res) => {
@@ -226,7 +220,8 @@ router.get('/users', [auth, admin], async (req, res) => {
     const users = await User.find({
         email: {
             $nin: [req.user.email]
-        }
+        },
+        status: true
     }).select("-password").lean()
 
     res.render('users', {

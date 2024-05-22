@@ -3,9 +3,12 @@ import { Server } from 'socket.io';
 import path from 'path'
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUiExpress from 'swagger-ui-express';
+import cron from 'node-cron'
 import { fileURLToPath } from 'url'
+
 import { loggerDev } from './lib/logger.js'
 
+import MongoUserManager from './dao/MongoUserManager.js';
 import MessageDAO from './dao/MongoMessageManager.js'
 
 import app from './app.js'
@@ -37,6 +40,11 @@ httpServer.listen(port, () => {
 const io = new Server(httpServer)
 
 const messageDao = new MessageDAO()
+const userManager = new MongoUserManager()
+
+cron.schedule("0 0 0 * * *", async () => {
+    await userManager.inactiveUsers()
+})
 
 io.on('connection', async (socket) => {
 

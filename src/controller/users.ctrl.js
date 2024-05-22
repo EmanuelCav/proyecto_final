@@ -233,6 +233,12 @@ export const login = async (req, res) => {
         res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: 3600000 })
         res.cookie('isLoggedIn', true, { httpOnly: true, secure: true, maxAge: 3600000 })
 
+        await User.findByIdAndUpdate(user._id, {
+            last_connection: new Date()
+        }, {
+            new: true
+        })
+
         return res.status(statusMessage.OK).redirect('/products')
 
     } catch (error) {
@@ -388,7 +394,7 @@ export const updateRole = async (req, res) => {
             users: result,
             message: "Update role successfully"
         })
-        
+
     } catch (error) {
         req.logger.error(error.message)
         CustomErrors.generateError(nameMessage.INTERNAL_SERVER_ERROR, error.message, statusMessage.INTERNAL_SERVER_ERROR)
