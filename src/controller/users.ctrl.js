@@ -35,6 +35,13 @@ export const forgotPassword = async (req, res) => {
 
     try {
 
+        if (!email) {
+            return res.status(statusMessage.BAD_REQUEST).render('email', {
+                layout: 'home',
+                error: "There are empty fields"
+            })
+        }
+
         const result = await userManager.passwordForgot(email)
 
         if (!result) {
@@ -43,9 +50,11 @@ export const forgotPassword = async (req, res) => {
 
         const token = linkToken(email)
 
-        return res.status(statusMessage.OK).json({
-            message: "Check your email",
-            token
+        res.cookie('jwt_recover', token, { httpOnly: true, secure: true, maxAge: 3600000 })
+
+        return res.status(statusMessage.OK).render('email', {
+            layout: 'home',
+            message: "Check your email"
         })
 
     } catch (error) {
@@ -57,21 +66,24 @@ export const forgotPassword = async (req, res) => {
 
 export const recoverPassword = async (req, res) => {
 
-    const { email } = req.params
     const { password } = req.body
 
     try {
 
-        const result = await userManager.passwordRecover(email, password)
+        if (!password) {
+            return res.status(statusMessage.BAD_REQUEST).render('recover', {
+                layout: 'home',
+                error: "There are empty fields"
+            })
+        }
+
+        const result = await userManager.passwordRecover(req.user.email, password)
 
         if (!result) {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "User does not exists or password is not avaible", statusMessage.BAD_REQUEST)
         }
 
-        return res.status(statusMessage.OK).json({
-            message: "Password updated successfully",
-            user: result
-        })
+        return res.status(statusMessage.OK).redirect('/login')
 
     } catch (error) {
         req.logger.error(error.message)

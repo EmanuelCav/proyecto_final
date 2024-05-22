@@ -158,3 +158,5 @@ error: You have to upload a file
 error: Cannot access 'user' before initialization
 error: Cannot access 'user' before initialization
 error: user is not defined
+error: User does not exists
+error: Cannot read properties of undefined (reading 'email')

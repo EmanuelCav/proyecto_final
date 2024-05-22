@@ -11,7 +11,7 @@ export const auth = (req, res, next) => {
 
     if (!token) {
         res.redirect('/login')
-        return 
+        return
     }
 
     const verification = jwt.verify(token, `${jwt_key}`)
@@ -52,11 +52,13 @@ export const admin = (req, res, next) => {
 
 export const emailAuth = async (req, res, next) => {
 
-    const token = req.cookies.jwt
+    const token = req.cookies.jwt_recover
 
     if (!token) {
         await forgotPasswordEmail(req.body.email)
-        return res.status(statusMessage.UNAUTHORIZED).json({ message: "Token does not exists" })
+        return res.status(statusMessage.UNAUTHORIZED).render('login', {
+            layout: 'home'
+        })
     }
 
     const verification = jwt.verify(token, `${jwt_email_key}`)
@@ -65,6 +67,8 @@ export const emailAuth = async (req, res, next) => {
         await forgotPasswordEmail(req.body.email)
         return res.status(statusMessage.UNAUTHORIZED).json({ message: "Token is not valid" })
     }
+
+    req.user = verification
 
     next()
 

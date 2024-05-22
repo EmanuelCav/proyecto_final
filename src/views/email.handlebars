@@ -1,0 +1,26 @@
+{{#if error}}
+<div class="alert alert-danger" id="container-message" role="alert">
+  {{error}}
+</div>
+{{/if}}
+
+{{#if message}}
+<div class="alert alert-success" id="message" role="alert">
+    {{message}}
+</div>
+{{/if}}
+
+
+<div class="container-auth">
+    <h1 class="text-title">Write your email</h1>
+    <form action="/email" method="post" class="container-form">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" name="email" id="email" value="{{email}}"
+                placeholder="email">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Accept</button>
+    </form>
+</div>
+
+<script src="/js/products.js"></script>

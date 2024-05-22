@@ -200,10 +200,10 @@ export const productDelete = async (req, res) => {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Product does not exists or you cannot remove this product", statusMessage.BAD_REQUEST)
         }
 
-        const user = await User.findById(req.user.id)
+        const user = await User.findById(req.user.id).select("-password")
 
         if(user.role === 'premium') {
-            await removeProductEmail()
+            await removeProductEmail(user.email)
         }
 
         return res.status(statusMessage.OK).redirect('/panel')

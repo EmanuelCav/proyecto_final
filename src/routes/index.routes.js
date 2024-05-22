@@ -4,7 +4,7 @@ import Product from '../model/product.js'
 import Cart from '../model/cart.js'
 import User from '../model/user.js'
 
-import { auth, admin } from '../middleware/auth.js'
+import { auth, admin, emailAuth } from '../middleware/auth.js'
 
 const router = Router()
 
@@ -225,6 +225,37 @@ router.get('/users', admin, async (req, res) => {
         layout: 'home',
         user: req.user,
         users
+    })
+
+})
+
+router.get('/recover', emailAuth, async (req, res) => {
+
+    if (!req.cookies.jwt_recover) {
+        res.redirect('/login')
+        return
+    }
+
+    if (req.cookies.isLoggedIn) {
+        res.redirect('/products')
+        return
+    }
+
+    res.render('recover', {
+        layout: 'home'
+    })
+
+})
+
+router.get('/email', async (req, res) => {
+
+    if (req.cookies.isLoggedIn) {
+        res.redirect('/products')
+        return
+    }
+
+    res.render('email', {
+        layout: 'home'
     })
 
 })

@@ -40,7 +40,7 @@ export const forgotPasswordEmail = async (email) => {
             from: `'EMAILS' ${my_mail}`,
             to: email,
             subject: "eCommerce - Forgot password",
-            html: "<a href='http://localhost:4000/recoverpassword'>Recover account</a>"
+            html: "<a href='http://localhost:4000/recover'>Recover account</a>"
         })
         
     } catch (error) {

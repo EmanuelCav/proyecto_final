@@ -31,13 +31,13 @@ router.get('/api/sesions/current', auth, passport.authenticate("current"), (req,
   }
 })
 
-router.post('/api/users', userCtrl.forgotPassword)
+router.post('/email', userCtrl.forgotPassword)
 router.post('/profile', auth, documents.array("files", 3), userCtrl.uploadDocument)
 
 router.delete('/api/users/:id', [auth, admin], userCtrl.removeUser)
 router.delete('/api/users', [auth, admin], userCtrl.removeUsers)
 
-router.put('/api/users/:email', emailAuth, userCtrl.recoverPassword)
+router.put('/recover', emailAuth, userCtrl.recoverPassword)
 router.put('/profile', auth, profiles.single("file"), userCtrl.updateProfileImage)
 
 export default router

@@ -1,0 +1,27 @@
+{{#if error}}
+<div class="alert alert-danger" id="container-message" role="alert">
+  {{error}}
+</div>
+{{/if}}
+
+{{#if message}}
+<div class="alert alert-success" id="message" role="alert">
+    {{message}}
+</div>
+{{/if}}
+
+
+<div class="container-auth">
+    <h1 class="text-title">Write your password</h1>
+    <form action="/recover?_method=PUT" method="post" class="container-form">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" id="password" value="{{password}}"
+                placeholder="password">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Accept</button>
+    </form>
+</div>
+
+<script src="/js/products.js"></script>
