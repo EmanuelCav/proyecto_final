@@ -83,6 +83,8 @@ export const recoverPassword = async (req, res) => {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "User does not exists or password is not avaible", statusMessage.BAD_REQUEST)
         }
 
+        res.clearCookie('jwt_recover')
+
         return res.status(statusMessage.OK).redirect('/login')
 
     } catch (error) {
@@ -332,7 +334,7 @@ export const removeUsers = async (req, res) => {
 
         await userManager.inactiveUsers()
 
-        return res.status(statusMessage.OK).json({ message: "User removed successfully" })
+        return res.status(statusMessage.OK).json({ message: "Users removed successfully" })
 
     } catch (error) {
         req.logger.error(error.message)
@@ -360,6 +362,33 @@ export const removeUser = async (req, res) => {
             message: "User removed successfully"
         })
 
+    } catch (error) {
+        req.logger.error(error.message)
+        CustomErrors.generateError(nameMessage.INTERNAL_SERVER_ERROR, error.message, statusMessage.INTERNAL_SERVER_ERROR)
+    }
+
+}
+
+export const updateRole = async (req, res) => {
+
+    const { id } = req.params
+    const { role } = req.query
+
+    try {
+
+        const result = await userManager.roleUpdate(id, role, req.user.email)
+
+        if (!result) {
+            CustomErrors.generateError(nameMessage.BAD_REQUEST, "User does not exists", statusMessage.BAD_REQUEST)
+        }
+
+        return res.status(statusMessage.OK).render('users', {
+            layout: 'home',
+            user: req.user,
+            users: result,
+            message: "Update role successfully"
+        })
+        
     } catch (error) {
         req.logger.error(error.message)
         CustomErrors.generateError(nameMessage.INTERNAL_SERVER_ERROR, error.message, statusMessage.INTERNAL_SERVER_ERROR)

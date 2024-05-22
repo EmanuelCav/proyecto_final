@@ -16,12 +16,37 @@
             <img src="{{this.image.image}}" alt="user-profile" style="width: 50px; height: 50px; border-radius: 50%;">
             <p>{{this.first_name}} {{this.last_name}} - {{this.role}}</p>
         </div>
-        <div>
+        <div class="contain-events-user">
             <form method="POST" action="/api/users/{{this._id}}?_method=DELETE">
-                <button class="btn btn-danger">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-danger" style="margin-right: 30px;">
                     Remove
                 </button>
             </form>
+            {{#if_eq this.role 'user'}}
+            <form method="POST" action="/users/{{this._id}}?_method=PUT&role=admin">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-success">
+                    Change to admin
+                </button>
+            </form>
+            {{else}}
+
+            {{#if_eq this.role 'premiun'}}
+            <form method="POST" action="/users/{{this._id}}?_method=PUT&role=user">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-success">
+                    Change to admin
+                </button>
+            </form>
+            {{/if_eq}}
+
+            <form method="POST" action="/users/{{this._id}}?_method=PUT&role=user">
+                <button class="btn btn-danger">
+                    Change to user
+                </button>
+            </form>
+            {{/if_eq}}
         </div>
     </div>
     {{/each}}

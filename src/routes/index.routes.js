@@ -143,8 +143,6 @@ router.get('/profile', auth, async (req, res) => {
 
     const user = await User.findById(req.user.id).select("-password").lean()
 
-    console.log(user);
-
     res.render('profile', {
         layout: 'home',
         user: req.user,
@@ -208,7 +206,7 @@ router.get('/products/update/:id', [auth, admin], async (req, res) => {
 
 })
 
-router.get('/users', admin, async (req, res) => {
+router.get('/users', [auth, admin], async (req, res) => {
 
     if (!req.cookies.isLoggedIn) {
         res.redirect('/login')

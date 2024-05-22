@@ -39,5 +39,6 @@ router.delete('/api/users', [auth, admin], userCtrl.removeUsers)
 
 router.put('/recover', emailAuth, userCtrl.recoverPassword)
 router.put('/profile', auth, profiles.single("file"), userCtrl.updateProfileImage)
+router.put('/users/:id', [auth, admin], userCtrl.updateRole)
 
 export default router

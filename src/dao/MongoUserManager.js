@@ -139,4 +139,26 @@ export default class UserDAO {
 
     }
 
+    async roleUpdate(id, role, email) {
+
+        const result = await User.findById(id)
+
+        if (!result) {
+            return
+        }
+
+        await User.findByIdAndUpdate(id, {
+            role
+        }, {
+            new: true
+        })
+
+        return await User.find({
+            email: {
+                $nin: [email]
+            }
+        }).select("-password").lean()
+
+    }
+
 }

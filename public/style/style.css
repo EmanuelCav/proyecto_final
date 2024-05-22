@@ -142,3 +142,9 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.contain-events-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

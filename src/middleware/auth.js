@@ -55,7 +55,6 @@ export const emailAuth = async (req, res, next) => {
     const token = req.cookies.jwt_recover
 
     if (!token) {
-        await forgotPasswordEmail(req.body.email)
         return res.status(statusMessage.UNAUTHORIZED).render('login', {
             layout: 'home'
         })
@@ -64,7 +63,6 @@ export const emailAuth = async (req, res, next) => {
     const verification = jwt.verify(token, `${jwt_email_key}`)
 
     if (!verification) {
-        await forgotPasswordEmail(req.body.email)
         return res.status(statusMessage.UNAUTHORIZED).json({ message: "Token is not valid" })
     }
 
