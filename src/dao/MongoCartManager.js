@@ -267,7 +267,8 @@ export default class CartDAO {
         return await Product.find({
             stock: {
                 $gt: 0
-            }
+            },
+            status: true
         }).lean()
 
     }

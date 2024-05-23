@@ -122,7 +122,7 @@ export const removeAllProducts = async (req, res) => {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Cart does not exists", statusMessage.BAD_REQUEST)
         }
 
-        return res.status(statusMessage.OK).redirect('/cart')
+        return res.status(statusMessage.OK).redirect(200, '/cart')
 
     } catch (error) {
         req.logger.error(error.message)

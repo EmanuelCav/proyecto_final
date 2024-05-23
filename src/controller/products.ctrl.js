@@ -5,6 +5,8 @@ import { ProductDTO } from '../dto/product.dto.js';
 
 import CustomErrors from '../lib/errors.js';
 
+import User from '../model/user.js'
+
 import { statusMessage, nameMessage } from '../helper/statusMessage.js';
 import { cloud } from '../helper/cloud.js';
 import { removeProductEmail } from '../helper/message.js';
@@ -19,7 +21,7 @@ export const products = async (req, res) => {
 
         const result = await ProductManager.getProducts(limit)
 
-        return res.status(statusMessage.OK).json(result)
+        return res.status(200).json(result)
 
     } catch (error) {
         req.logger.error(error.message)
@@ -193,20 +195,20 @@ export const productDelete = async (req, res) => {
     const { pid } = req.params
 
     try {
-
+        
         const result = await ProductManager.removeProduct(pid, req.user)
 
         if (!result) {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Product does not exists or you cannot remove this product", statusMessage.BAD_REQUEST)
         }
-
+        
         const user = await User.findById(req.user.id).select("-password")
 
         if(user.role === 'premium') {
             await removeProductEmail(user.email)
         }
 
-        return res.status(statusMessage.OK).redirect('/panel')
+        return res.status(statusMessage.OK).redirect(200, '/panel')
 
     } catch (error) {
         req.logger.error(error.message)

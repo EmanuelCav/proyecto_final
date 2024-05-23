@@ -170,3 +170,9 @@ error: (intermediate value).now is not a function
 error: (intermediate value).now is not a function
 error: amount is not defined
 error: (intermediate value).now is not a function
+error: limit is not defined
+error: User is not defined
+error: Client must be connected before running operations
+error: User is not defined
+error: Cannot set headers after they are sent to the client
+error: Cannot read properties of undefined (reading 'json')

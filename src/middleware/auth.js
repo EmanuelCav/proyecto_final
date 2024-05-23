@@ -3,11 +3,16 @@ import jwt from 'jsonwebtoken';
 import { jwt_key, jwt_email_key } from '../config/config.js';
 
 import { statusMessage } from '../helper/statusMessage.js';
-import { forgotPasswordEmail } from '../helper/message.js';
 
 export const auth = (req, res, next) => {
 
-    const token = req.cookies.jwt
+    let token
+
+    if (global.token) {
+        token = global.token
+    } else {
+        token = req.cookies.jwt
+    }
 
     if (!token) {
         res.redirect('/login')
@@ -74,7 +79,13 @@ export const emailAuth = async (req, res, next) => {
 
 export const premium = (req, res, next) => {
 
-    const token = req.cookies.jwt
+    let token
+
+    if (global.token) {
+        token = global.token
+    } else {
+        token = req.cookies.jwt
+    }
 
     if (!token) {
         return res.status(statusMessage.UNAUTHORIZED).json({ message: "Token does not exists" })

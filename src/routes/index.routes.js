@@ -27,7 +27,8 @@ router.get('/products', auth, async (req, res) => {
     const products = await Product.find({
         stock: {
             $gt: 0
-        }
+        },
+        status: true
     }).limit(limit).lean()
 
     res.render('products', {
@@ -129,7 +130,7 @@ router.get('/panel', [auth, admin], async (req, res) => {
         return
     }
 
-    const products = await Product.find().limit(limit).lean()
+    const products = await Product.find({ status: true }).limit(limit).lean()
 
     res.render('panel', {
         layout: 'home',

@@ -14,7 +14,7 @@ export default class ProductDAO {
 
     async getProducts(limit) {
 
-        const result = await Product.find().limit(limit)
+        const result = await Product.find({ status: true }).limit(limit)
 
         return result
     }
@@ -47,9 +47,13 @@ export default class ProductDAO {
             await cloud.uploader.destroy(product.thumbnails[i].imageId)
         }
 
-        await Product.findByIdAndDelete(id)
+        await Product.findByIdAndUpdate(id, {
+            status: false
+        }, {
+            new: true
+        })
 
-        const result = await Product.find().lean()
+        const result = await Product.find({ status: true }).lean()
 
         return result
     }

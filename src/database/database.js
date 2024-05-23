@@ -8,6 +8,7 @@ import { mongo_db } from '../config/config.js';
 
     try {
 
+        
         const connection = await mongoose.connect(`${mongo_db}`)
 
         if(connection.STATES.connected) {
