@@ -6,8 +6,8 @@ import { auth } from '../middleware/auth.js';
 
 const router = Router()
 
-router.get('/api/messages', getAllMessages)
-router.post('/api/messages', auth, createMessages)
+router.get('/api/messages', auth, getAllMessages)
+router.post('/chat', auth, createMessages)
 
 export default router
 

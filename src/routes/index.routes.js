@@ -3,6 +3,7 @@ import { Router } from 'express'
 import Product from '../model/product.js'
 import Cart from '../model/cart.js'
 import User from '../model/user.js'
+import Message from '../model/message.js'
 
 import { auth, admin, emailAuth } from '../middleware/auth.js'
 
@@ -259,6 +260,26 @@ router.get('/email', async (req, res) => {
 
     res.render('email', {
         layout: 'home'
+    })
+
+})
+
+router.get('/chat', auth, async (req, res) => {
+
+    if (!req.cookies.isLoggedIn) {
+        res.redirect('/login')
+        return
+    }
+
+    const messages = await Message.find().populate({
+        path: 'user',
+        select: 'first_name image'
+    }).lean()
+
+    res.render('chat', {
+        layout: 'home',
+        messages,
+        user: req.user
     })
 
 })

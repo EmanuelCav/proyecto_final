@@ -51,7 +51,11 @@ io.on('connection', async (socket) => {
     loggerDev.info("You are connected")
 
     socket.on("newMessage", async (message) => {
-        await messageDao.createMessage(message.user, message.message)
+        
+        if(!message.message) {
+            return
+        }
+
         const messages = await messageDao.getMessages()
         io.emit("updateMessages", messages)
     })

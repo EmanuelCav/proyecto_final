@@ -2,6 +2,8 @@ import MessageDAO from '../dao/MongoMessageManager.js';
 
 import CustomErrors from '../lib/errors.js';
 
+import Message from '../model/message.js'
+
 import { statusMessage, nameMessage } from '../helper/statusMessage.js';
 
 const messageDAO = new MessageDAO()
@@ -12,13 +14,31 @@ export const createMessages = async (req, res) => {
 
     try {
 
-        const showMessage = await messageDAO.createMessage(req.user_id, message)
+        const messages = await Message.find().populate({
+            path: 'user',
+            select: 'first_name image'
+        }).lean()
 
-        if(!showMessage) {
+        if (!message) {
+            return res.status(statusMessage.BAD_REQUEST).render('chat', {
+                layout: 'home',
+                messages,
+                user: req.user,
+                error: "Write a text to send a message"
+            })
+        }
+
+        const result = await messageDAO.createMessage(req.user.id, message)
+
+        if (!result) {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Message field is empty. Please complete", statusMessage.BAD_REQUEST)
         }
 
-        return res.status(statusMessage.OK).json(showMessage)
+        return res.status(statusMessage.OK).render('chat', {
+            layout: 'home',
+            messages: result,
+            user: req.user
+        })
 
     } catch (error) {
         req.logger.error(error.message)

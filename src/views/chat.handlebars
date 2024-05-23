@@ -1,0 +1,43 @@
+{{#if error}}
+<div class="alert alert-danger" id="container-message" role="alert">
+    {{error}}
+</div>
+{{/if}}
+
+<div class="container-chat">
+
+    <div class="container-messages">
+
+        {{#each messages}}
+
+        {{#if_eq user.id this.user._id}}
+        <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 10px;">
+            <div class="message">
+                <p>{{this.message}}</p>
+            </div>
+            <img src="{{this.user.image.image}}" alt="image-user" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px; margin-left: 5px;">
+        </div>
+        {{else}}
+        <div style="display: flex; justify-content: flex-start; align-items: center; margin-top: 10px;">
+            <img src="{{this.user.image.image}}" alt="image-user" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px; margin-left: 5px;">
+            <div class="message">
+                <p style="font-weight: 600;">{{this.user.first_name}}</p>
+                <p>{{this.message}}</p>
+            </div>
+        </div>
+        {{/if_eq}}
+
+        {{/each}}
+
+    </div>
+
+    <form action="/chat" method="post" class="container-form" id="form-message">
+        <div class="form-group">
+            <input type="message" class="form-control" name="message" id="message" value="{{message}}"
+                placeholder="Send a message">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Send</button>
+    </form>
+</div>
+
+<script src="/js/chat.js"></script>

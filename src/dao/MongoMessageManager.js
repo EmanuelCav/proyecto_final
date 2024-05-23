@@ -6,7 +6,7 @@ export default class MessageDAO {
 
     async createMessage(user, message) {
 
-        if(!message) {
+        if (!message) {
             return
         }
 
@@ -15,7 +15,12 @@ export default class MessageDAO {
             message
         }))
 
-        return await newMessage.save()
+        await newMessage.save()
+
+        return await Message.find().populate({
+            path: 'user',
+            select: 'first_name image'
+        }).lean()
 
     }
 
