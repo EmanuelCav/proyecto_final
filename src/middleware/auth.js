@@ -33,7 +33,13 @@ export const auth = (req, res, next) => {
 
 export const admin = (req, res, next) => {
 
-    const token = req.cookies.jwt
+    let token
+
+    if (global.token) {
+        token = global.token
+    } else {
+        token = req.cookies.jwt
+    }
 
     if (!token) {
         return res.status(statusMessage.UNAUTHORIZED).json({ message: "Token does not exists" })

@@ -239,6 +239,10 @@ export const login = async (req, res) => {
             new: true
         })
 
+        if (global.token) {
+            return res.status(statusMessage.OK).json(user)
+        }
+
         return res.status(statusMessage.OK).redirect('/products')
 
     } catch (error) {
@@ -324,6 +328,10 @@ export const register = async (req, res) => {
         res.cookie('isLoggedIn', true, { httpOnly: true, secure: true, maxAge: 3600000 })
 
         await infoEmail(email)
+
+        if (global.token) {
+            return res.status(statusMessage.OK).json(user)
+        }
 
         return res.status(statusMessage.OK).redirect('/products')
 

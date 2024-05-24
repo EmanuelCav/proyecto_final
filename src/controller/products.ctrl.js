@@ -67,7 +67,7 @@ export const productCreate = async (req, res) => {
             })
         }
 
-        if(!numbers.test(price)) {
+        if (!numbers.test(price)) {
             return res.status(statusMessage.BAD_REQUEST).render('panel', {
                 layout: 'home',
                 error: 'Price field must be a number',
@@ -75,7 +75,7 @@ export const productCreate = async (req, res) => {
             })
         }
 
-        if(!numbers.test(stock)) {
+        if (!numbers.test(stock)) {
             return res.status(statusMessage.BAD_REQUEST).render('panel', {
                 layout: 'home',
                 error: 'Stock field must be a number',
@@ -152,7 +152,7 @@ export const productUpdate = async (req, res) => {
             })
         }
 
-        if(!numbers.test(price)) {
+        if (!numbers.test(price)) {
             return res.status(statusMessage.BAD_REQUEST).render('panel', {
                 layout: 'home',
                 user: req.user,
@@ -161,7 +161,7 @@ export const productUpdate = async (req, res) => {
             })
         }
 
-        if(!numbers.test(stock)) {
+        if (!numbers.test(stock)) {
             return res.status(statusMessage.BAD_REQUEST).render('panel', {
                 layout: 'home',
                 user: req.user,
@@ -195,20 +195,24 @@ export const productDelete = async (req, res) => {
     const { pid } = req.params
 
     try {
-        
+
         const result = await ProductManager.removeProduct(pid, req.user)
 
         if (!result) {
             CustomErrors.generateError(nameMessage.BAD_REQUEST, "Product does not exists or you cannot remove this product", statusMessage.BAD_REQUEST)
         }
-        
+
         const user = await User.findById(req.user.id).select("-password")
 
-        if(user.role === 'premium') {
+        if (user.role === 'premium') {
             await removeProductEmail(user.email)
         }
 
-        return res.status(statusMessage.OK).redirect(200, '/panel')
+        if (global.token) {
+            return res.status(statusMessage.OK).json(result)
+        }
+
+        return res.status(statusMessage.OK).redirect('/panel')
 
     } catch (error) {
         req.logger.error(error.message)

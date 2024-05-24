@@ -39,37 +39,37 @@ describe('Test General', () => {
 
     })
 
-    // describe('Session', () => {
+    describe('Session', () => {
 
-    //     const dataRegister = {
-    //         firstname: "example",
-    //         lastnname: "sample",
-    //         email: 'example@gmail.com',
-    //         password: "password",
-    //         confiirm: "password"
-    //     }
+        const dataRegister = {
+            firstname: "example",
+            lastname: "sample",
+            email: 'example@gmail.com',
+            password: "password",
+            confirm: "password"
+        }
 
-    //     it('Should create a user successfully', async () => {
-    //         const response = await requester.post("/api/register").send(dataRegister)
-    //         expect(response.ok).to.be.true
-    //     })
+        it('Should create a user successfully', async () => {
+            const response = await request(app).post("/register").send(dataRegister)
+            expect(response.ok).to.be.true
+        })
 
-    //     const dataLogin = {
-    //         email: "example@gmail.com",
-    //         password: "password"
-    //     }
+        const dataLogin = {
+            email: "cavallinema@gmail.com",
+            password: "password"
+        }
 
-    //     it('Login body should have a email field', async () => {
-    //         const response = await requester.post("/api/login").send(dataLogin)
-    //         expect(response.body).to.have.property('email')
-    //     })
+        it('Login body should response 200', async () => {
+            const response = await request(app).post("/login").send(dataLogin)
+            expect(response.statusCode).to.equal(200)
+        })
 
-    //     it('Should response OK', async () => {
-    //         const response = await requester.get("/api/users")
-    //         expect(response.ok).to.be.true
-    //     })
+        it('GET userShould response OK', async () => {
+            const response = await request(app).get("/api/users").set("Authorization", `Bearer ` + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NGY3NWE5ZWU3M2QyM2E3MTg0MmEyZiIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5jb2RlckBjb2Rlci5jb20iLCJpYXQiOjE3MTY0ODQ0OTQsImV4cCI6MTcxNzA4OTI5NH0.4SVZ3EbayH2TMuLR4bnrQ3ciaxuy2jYfX2mGfn5HePU')
+            expect(response.ok).to.be.true
+        })
 
-    // })
+    })
 
     describe('Carts', () => {
 
@@ -85,10 +85,10 @@ describe('Test General', () => {
             expect(response.ok).to.be.true
         })
 
-        // it('Create cart must have cart property', async () => {
-        //     const response = await request(app).post(`/api/carts`).set("Authorization", `Bearer ` + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjU1Mzc3ZjlhNzc3NzliY2QwOTU1ZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5jb2RlckBjb2Rlci5jb20iLCJpYXQiOjE3MTE0MTI2NjIsImV4cCI6MTcxNjU5NjY2Mn0.7aoP3MPVAustQIoIYtIdZbFbwiZFEJaKSpp_Q_o-rYY')
-        //     expect(response.body).to.have.property("cart")
-        // })
+        it('Create cart must have cart property', async () => {
+            const response = await request(app).post(`/api/carts`).set("Authorization", `Bearer ` + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjU1Mzc3ZjlhNzc3NzliY2QwOTU1ZSIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5jb2RlckBjb2Rlci5jb20iLCJpYXQiOjE3MTE0MTI2NjIsImV4cCI6MTcxNjU5NjY2Mn0.7aoP3MPVAustQIoIYtIdZbFbwiZFEJaKSpp_Q_o-rYY')
+            expect(response.body).to.have.property("cart")
+        })
 
     })
 

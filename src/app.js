@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import cors from 'cors'
 import morgan from 'morgan';
 import passport from 'passport';
 import { engine } from 'express-handlebars'
@@ -36,6 +37,7 @@ app.set('view options', { layout: 'home' });
 
 app.use(methodOverride('_method'));
 app.use(morgan('dev'))
+app.use(cors())
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: false, limit: '10mb' }))
 app.use(passport.initialize())

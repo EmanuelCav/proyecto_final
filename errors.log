@@ -176,3 +176,8 @@ error: Client must be connected before running operations
 error: User is not defined
 error: Cannot set headers after they are sent to the client
 error: Cannot read properties of undefined (reading 'json')
+error: Client must be connected before running operations
+error: Cannot set headers after they are sent to the client
+error: Cannot set headers after they are sent to the client
+error: Cannot set headers after they are sent to the client
+error: result is not defined
