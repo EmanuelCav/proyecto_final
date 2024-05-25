@@ -21,7 +21,7 @@ export const products = async (req, res) => {
 
         const result = await ProductManager.getProducts(limit)
 
-        return res.status(200).json(result)
+        return res.status(statusMessage.OK).json(result)
 
     } catch (error) {
         req.logger.error(error.message)
